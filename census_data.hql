@@ -144,4 +144,5 @@ CREATE EXTERNAL TABLE census_data (
  X DECIMAL
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
-LOCATION 's3://gu-anly502-yelp/census_table/';
+LOCATION 's3://gu-anly502-yelp/census_table/'
+tblproperties("skip.header.line.count"="1");
