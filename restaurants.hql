@@ -69,6 +69,7 @@ ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
 STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/restaurant_table/';
 
+--Arif's edits
 select * from restaurants limit 10;
-
+select stars*review_count*PriceRange AS success FROM restaurants;
 --omitted: latitude, longitude, categories, neighborhoods
