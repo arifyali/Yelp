@@ -146,3 +146,5 @@ CREATE EXTERNAL TABLE census_data (
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/census_table/'
 tblproperties("skip.header.line.count"="1");
+
+select * from census_data limit 2;
