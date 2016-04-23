@@ -140,7 +140,7 @@ CREATE EXTERNAL TABLE census_data (
  B25002_003E DECIMAL,
  B25077_001E DECIMAL,
  B25064_001E DECIMAL,
- zip.code.tabulation.area. DECIMAL,
+ zip_code_tabulation_area DECIMAL,
  X DECIMAL,
  RegionId STRING
 )
