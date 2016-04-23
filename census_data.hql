@@ -141,7 +141,7 @@ CREATE EXTERNAL TABLE census_data (
  B25077_001E DECIMAL,
  B25064_001E DECIMAL,
  zip_code_tabulation_area DECIMAL,
- X DECIMAL,
+ X DECIMAL
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
-LOCATION 's3://gu-anly502-yelp/nsus_table/';
+LOCATION 's3://gu-anly502-yelp/census_table/';
