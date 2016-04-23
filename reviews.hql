@@ -20,4 +20,7 @@ ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
 STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/review_table/';
 
-select * from reviews limit 10;
+SELECT datediff(max(cast(date as date)),min(cast(date as date))), business_id  
+FROM reviews 
+GROUP BY business_id 
+ORDER BY business_id DESC limit 20;

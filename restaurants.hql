@@ -71,5 +71,5 @@ LOCATION 's3://gu-anly502-yelp/restaurant_table/';
 
 --Arif's edits
 --select * from restaurants limit 0;
-SELECT if(open, stars*review_count,0) AS success, * FROM restaurants;
+SELECT if(open, stars*review_count,0) AS success, business_id FROM restaurants;
 --omitted: latitude, longitude, categories, neighborhoods
