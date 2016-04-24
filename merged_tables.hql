@@ -143,7 +143,8 @@ INSERT OVERWRITE TABLE review_dates
  FROM reviews
  GROUP BY business_id;
 
- 
+
+DROP TABLE IF EXISTS census_rest_success; 
 CREATE TABLE census_rest_success AS 
 SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
 , (white+black+asian+native_americans+pacific_islander+other_race+multiple_race+hispanic) AS population 
