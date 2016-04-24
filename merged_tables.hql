@@ -84,27 +84,27 @@ CREATE EXTERNAL TABLE census_data (
   2015_01 DECIMAL,
   2016_01 DECIMAL,
   2016_02 DECIMAL,
-  B01001_011E DECIMAL,
-  B01001_035E DECIMAL,
-  B02001_002E DECIMAL,
-  B02001_003E DECIMAL,
-  B02001_004E DECIMAL,
-  B02001_005E DECIMAL,
-  B02001_006E DECIMAL,
-  B02001_007E DECIMAL,
-  B02001_008E DECIMAL,
-  B03001_003E DECIMAL,
-  B19013_001E DECIMAL,
-  B19113_001E DECIMAL,
-  B25001_001E DECIMAL,
-  B25002_002E DECIMAL,
-  B25003_002E DECIMAL,
+  male_age_25_29 DECIMAL,
+  female_age_25_29 DECIMAL,
+  white DECIMAL,
+  black DECIMAL,
+  native_americans DECIMAL,
+  asian DECIMAL,
+  pacific_islander DECIMAL,
+  other_race DECIMAL,
+  multiple_race DECIMAL,
+  hispanic DECIMAL,
+  median_household_income DECIMAL,
+  median_family_income DECIMAL,
+  total_housing_units DECIMAL,
+  total_occupied_housing_units DECIMAL,
+  total_owner_occupied_housing_units DECIMAL,
   B25075_023E DECIMAL,
   B25075_024E DECIMAL,
   B25075_025E DECIMAL,
-  B25002_003E DECIMAL,
-  B25077_001E DECIMAL,
-  B25064_001E DECIMAL
+  total_vacate_housing_units DECIMAL,
+  median_housing_value DECIMAL,
+  Median_gross_rent DECIMAL
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/census_table/'
@@ -144,9 +144,13 @@ INSERT OVERWRITE TABLE review_dates
  GROUP BY business_id;
 
  
-SELECT restaurants.*,census_data.*, review_dates.days_open
+SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
+, (white+black+asian+native_americans+pacific_islander+other_race+multiple_race+hispanic) AS population 
+,restaurants.*,census_data.*
 FROM restaurants
 JOIN census_data
 ON restaurants.zipcode = census_data.zipcode
 JOIN review_dates
-ON restaurants.business_id = review_dates.business_id;
+ON restaurants.business_id = review_dates.business_id
+--LIMIT 20
+;
