@@ -132,12 +132,21 @@ ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
 STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/review_table/';
 
+DROP TABLE IF EXISTS review_dates;
+ create temporary table review_dates (
+   days_open DECIMAL,
+   business_id string
+);
 
-SELECT restaurants.*,census_data.*, datediff(max(cast(reviews.date as date)),min(cast(reviews.date as date))) AS days_open, reviews.business_id
+INSERT OVERWRITE TABLE review_dates
+ SELECT datediff(max(cast(date as date)),min(cast(date as date))), business_id 
+ FROM reviews
+ GROUP BY business_id;
+
+ 
+SELECT restaurants.*,census_data.*, review_dates.days_open
 FROM restaurants
 JOIN census_data
 ON restaurants.zipcode = census_data.zipcode
-JOIN reviews
-ON restaurants.business_id = reviews.business_id
-GROUP BY reviews.business_id
-LIMIT 20;
+JOIN review_dates
+ON restaurants.business_id = review_dates.business_id;
