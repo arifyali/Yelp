@@ -144,13 +144,11 @@ INSERT OVERWRITE TABLE review_dates
  GROUP BY business_id;
 
  
-SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
+CREATE TABLE census_rest_success AS (SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
 , (white+black+asian+native_americans+pacific_islander+other_race+multiple_race+hispanic) AS population 
 ,restaurants.*,census_data.*
 FROM restaurants
 JOIN census_data
 ON restaurants.zipcode = census_data.zipcode
 JOIN review_dates
-ON restaurants.business_id = review_dates.business_id
---LIMIT 20
-;
+ON restaurants.business_id = review_dates.business_i));
