@@ -75,10 +75,10 @@ LOCATION 's3://gu-anly502-yelp/restaurant_table/';
 
 DROP TABLE IF EXISTS census_data;
 CREATE EXTERNAL TABLE census_data (
-  zipcode STRING,
+  regionID STRING,
   RegionName STRING,
-  City STRING,
-  State STRING,
+  cCity STRING,
+  cState STRING,
   Metro STRING,
   CountyName STRING,
   2015_01 DECIMAL,
@@ -144,11 +144,12 @@ INSERT OVERWRITE TABLE review_dates
  GROUP BY business_id;
 
  
-CREATE TABLE census_rest_success AS (SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
+CREATE TABLE census_rest_success AS 
+SELECT if(restaurants.open, restaurants.stars/review_dates.days_open,0) AS success_metric
 , (white+black+asian+native_americans+pacific_islander+other_race+multiple_race+hispanic) AS population 
 ,restaurants.*,census_data.*
 FROM restaurants
 JOIN census_data
-ON restaurants.zipcode = census_data.zipcode
+ON restaurants.zipcode = census_data.regionID
 JOIN review_dates
-ON restaurants.business_id = review_dates.business_i));
+ON restaurants.business_id = review_dates.business_id;
