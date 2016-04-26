@@ -4,4 +4,4 @@ DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS reviews_agg;
 DROP TABLE IF EXISTS census_data;
 DROP TABLE IF EXISTS rest_rev_merge;
-DROP TABLE IF EXISTS census_rest_success;;
+DROP TABLE IF EXISTS census_rest_success;
