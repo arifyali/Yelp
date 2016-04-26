@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS census_data;
-CREATE EXTERNAL TABLE census_data (
+CREATE EXTERNAL TABLE IF NOT EXISTS census_data (
   RegionID STRING,
   RegionName STRING,
   City STRING,
@@ -35,4 +34,3 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE
 LOCATION 's3://gu-anly502-yelp/census_table/'
 tblproperties("skip.header.line.count"="1");
 
-select * from census_data limit 2;

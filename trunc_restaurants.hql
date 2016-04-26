@@ -4,8 +4,7 @@ SET hive.groupby.orderby.position.alias=true;
 
 ADD JAR /home/hadoop/Yelp/json-serde-1.3.7-jar.jar;
 
-DROP TABLE IF EXISTS restaurants;
-CREATE EXTERNAL TABLE restaurants (
+CREATE EXTERNAL TABLE IF NOT EXISTS restaurants (
   business_id string,
   zipcode string,
   hours struct<Monday:struct<open:string,
