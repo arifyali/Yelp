@@ -25,7 +25,7 @@ df = df.dropna()
 
 features = df.select(df['pricerange'], df['2016_01'], df['2016_02'], df['male_age_25_29'],
           df['female_age_25_29'], df['white_percent'], df['black_percent'], df['asian_percent'],
-          df['pi_percent'], df['other_race_percent'], df['multiple__percent'],
+          df['pi_percent'], df['other_race_percent'], df['multiple_percent'],
           df['hispanic_percent'], df['median_household_income'], df['median_family_income'],
           df['vacant_housing_units'], df['median_housing_value'], df['median_rent'],
           df['success_class'], df['population'])
