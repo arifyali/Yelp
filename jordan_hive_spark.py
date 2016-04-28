@@ -18,7 +18,9 @@ def count_not_null(c):
 exprs = [count_not_null(c) for c in df.columns]
 df.agg(*exprs).show()
 
-#TODO: Clean nulls (with mean?)
+df = df.dropna()
+
+#TODO: drop all nulls
 #TODO: Create class variable for success metric (70/30 split) - must find 70th %tile
 #TODO: Create Validation set, then create randomized train - test sets, map processing on all
 
@@ -41,7 +43,7 @@ def parsePoint(d): ## wont be able to use line.split here?
     values = [float(x) for x in d.values()] ##this block is unusable until we have our Hive Data
     return LabeledPoint(pred, values)
 
-parsedData = map(parsePoint, feats_dict)
+parsedData = sc.parallelize(map(parsePoint, feats_dict))
 
 ## create training data from this
 ##Create test data
