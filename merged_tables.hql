@@ -17,5 +17,5 @@ FROM rest_rev_merge rrm JOIN census_data cd
 ON (rrm.zipcode=cd.regionname);
 
 CREATE TABLE IF NOT EXISTS census_rest_success AS
-SELECT *, if(success>percentile_approx(success, .7), 1, 0) as success
+SELECT *, if(success>percentile_approx(success, 0.7), 1, 0) as success
 FROM census_rest_merge;
