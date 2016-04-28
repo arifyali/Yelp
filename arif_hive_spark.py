@@ -1,6 +1,5 @@
 from pyspark.sql import HiveContext
-from pyspark.mllib.classification import SVMWithSGD, SVMModel
-from pyspark.mllib.regression import LabeledPoint
+from pyspark.mllib.regression import LabeledPoint, LassoWithSGD
 from pyspark.sql.functions import col, sum
 
 from copy import deepcopy
@@ -48,7 +47,7 @@ parsedData = sc.parallelize(map(parsePoint, feats_dict))
 
 ## create validation set
 
-model = SVMWithSGD.train(parsedData, iterations=100)
+model = LassoWithSGD.train(parsedData, iterations=100)
 
 # Training error
 labelsAndPreds = parsedData.map(lambda p: (p.label, model.predict(p.features)))
