@@ -1,6 +1,7 @@
 from pyspark.sql import HiveContext
 from pyspark.mllib.classification import SVMWithSGD, SVMModel
 from pyspark.mllib.regression import LabeledPoint
+from pyspark.sql.functions import col, sum
 
 from copy import deepcopy
 
