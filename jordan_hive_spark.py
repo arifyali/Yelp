@@ -20,10 +20,7 @@ df.agg(*exprs).show()
 
 df = df.dropna()
 
-#TODO: drop all nulls
-#TODO: Create class variable for success metric (70/30 split) - must find 70th %tile
 #TODO: Create Validation set, then create randomized train - test sets, map processing on all
-
 
 features = df.select(df['pricerange'], df['2016_01'], df['2016_02'], df['male_age_25_29'],
           df['female_age_25_29'], df['white'], df['black'], df['asian'],
