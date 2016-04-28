@@ -28,7 +28,7 @@ features = df.select(df['pricerange'], df['2016_01'], df['2016_02'], df['male_ag
           df['pacific_islander'], df['other_race'], df['multiple_race'],
           df['hispanic'], df['median_household_income'], df['median_family_income'],
           df['vacant_housing_units'], df['median_housing_value'], df['median_rent'],
-          df['success'], df['population'])
+          df['success_class'], df['population'])
 
 feats_list = features.collect()
 feats_dict = [i.asDict() for i in feats_list]
@@ -36,8 +36,8 @@ feats_dict = [i.asDict() for i in feats_list]
 
 def parsePoint(d): ## wont be able to use line.split here?
     d_copy = deepcopy(d) # I hate using deepcopy so much
-    pred = d_copy['success']
-    d.pop('success', None)
+    pred = d_copy['success_class']
+    d.pop('success_class', None)
     values = [float(x) for x in d.values()] ##this block is unusable until we have our Hive Data
     return LabeledPoint(pred, values)
 
