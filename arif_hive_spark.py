@@ -7,7 +7,7 @@ from copy import deepcopy
 
 sc = SparkContext()
 sqlContext = HiveContext(sc)
-qry = "SELECT *,white/population as white_percent,asian/population as asian_percent,pacific_islander/population as pi_percent,other_race/population as other_race_percent,multiple_race/population as multiple_percent,hispanic/population as hispanic_percent FROM census_rest_success"
+qry = "SELECT *,white/population as white_percent,black/population as black_percent,asian/population as asian_percent,pacific_islander/population as pi_percent,other_race/population as other_race_percent,multiple_race/population as multiple_percent,hispanic/population as hispanic_percent FROM census_rest_success"
 df = sqlContext.sql(qry)
 
 ## Lets train a Support Vector Classifier on this data
