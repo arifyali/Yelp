@@ -14,7 +14,7 @@ SELECT *,
        if(open, rrm.stars*rrm.review_count/(rrm.days_open+1), 0) as success,
        cd.white+cd.black+cd.native_american+cd.asian+cd.pacific_islander+cd.other_race+cd.multiple_race+cd.hispanic as population
 FROM rest_rev_merge rrm JOIN census_data cd
-ON (rrm.zipcode=cd.regionid);
+ON (rrm.zipcode=cd.regionname);
 
 
 SELECT * from census_rest_success limit 2;
