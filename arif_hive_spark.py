@@ -46,17 +46,14 @@ def parsePoint(d): ## wont be able to use line.split here?
     values = [float(x) for x in d.values()] ##this block is unusable until we have our Hive Data
     return (pred, Vectors.dense(values))
 
+# training set
 trainParsed = sc.parallelize(map(parsePoint, train_dict))
+# test set 
 testParsed = sc.parallelize(map(parsePoint, test_dict))
 
-## create training data from this
-
-##Create test data
 
 ## create validation set
 
-
-# Training error
 trainDf = sqlContext.createDataFrame(trainParsed, ["label", "features"])
 testDf = sqlContext.createDataFrame(testParsed, ["label", "features"])
 lm_model = LinearRegression(featuresCol="features", predictionCol="prediction", maxIter=100, regParam=0.0, elasticNetParam=0.0, tol=1e-6)
@@ -76,7 +73,6 @@ lm_model.save(sc, "LinerRegressionModel")
 
 # LASSO
 
-#TODO: do same as 54-56 with test and validation
 lasso_model = LinearRegression(featuresCol="features", predictionCol="prediction", maxIter=100, regParam=1.0, elasticNetParam=0.0, tol=1e-6)
 lasso_model_fit = lasso_model.fit(trainDf)
 lasso_transform = lasso_model_fit.transform(trainDf) #change to a test model
@@ -87,10 +83,6 @@ print("LASSO training Mean Squared Error = " + str(lasso_MSE))
 lasso_transform = lasso_model_fit.transform(testDf) #change to a test model
 lasso_results = lasso_transform.select(lasso_transform['prediction'], lasso_transform['label'])
 lasso_MSE = lasso_results.map(lambda(p,l):(p-l)**2).reduce(lambda x,y:x+y)/results.count()
-print("LASSO training Mean Squared Error = " + str(lasso_MSE))
+print("LASSO testing Mean Squared Error = " + str(lasso_MSE))
 
 model.save(sc, "LASSOModel")
-
-### Run Model on Validation Set
-## TODO: output file of zipcodes and predicted success metrics
-## TODO: Use bokeh on file to make visualization of the US
