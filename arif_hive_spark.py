@@ -1,12 +1,9 @@
 from pyspark.sql import HiveContext
-<<<<<<< HEAD
 from pyspark.mllib.regression import LabeledPoint, LinearModel, LinearRegressionWithSGD, LassoWithSGD 
-=======
-from pyspark.mllib.regression import LabeledPoint, LassoWithSGD
->>>>>>> eead9afaf72edf190b316096fdf7123637d174dd
+from pyspark.ml.regression import LinearRegression
 from pyspark.sql.functions import col, sum
-
 from copy import deepcopy
+from pyspark.mllib.linalg import Vectors
 
 sc = SparkContext()
 sqlContext = HiveContext(sc)
@@ -43,7 +40,7 @@ def parsePoint(d): ## wont be able to use line.split here?
     pred = d_copy['success_metric']
     d.pop('success_metric', None)
     values = [float(x) for x in d.values()] ##this block is unusable until we have our Hive Data
-    return LabeledPoint(pred, values)
+    return (pred, Vectors.dense(values))
 
 parsedData = sc.parallelize(map(parsePoint, feats_dict))
 
@@ -52,36 +49,25 @@ parsedData = sc.parallelize(map(parsePoint, feats_dict))
 
 ## create validation set
 
-<<<<<<< HEAD
-lm_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True)
-=======
-model = LassoWithSGD.train(parsedData, iterations=100)
->>>>>>> eead9afaf72edf190b316096fdf7123637d174dd
+#lm_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True)
 
 # Training error
-lm_valuesAndPreds = parsedData.map(lambda p: (p.label, lm_model.predict(p.features)))
-MSE = lm_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lm_valuesAndPreds.count()
-print("Linear Regression Mean Squared Error = " + str(MSE))
+#lm_valuesAndPreds = parsedData.map(lambda p: (p.label, lm_model.predict(p.features)))
+#MSE = lm_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lm_valuesAndPreds.count()
+#print("Linear Regression Mean Squared Error = " + str(MSE))
 
-lm_model = LinearRegressionWithSGD.train(parsedData, iterations=10)
+df = sqlContext.createDataFrame(parsedData, ["prediction", "features"])
+lm_model = LinearRegression(featuresCol="features", predictionCol="prediction", maxIter=100, regParam=0.0, elasticNetParam=0.0, tol=1e-6)
+lm_model_fit = lm_model.fit(features)
 lm_model.save(sc, "LinerRegressionModel")
 
 # LASSO
-lasso_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True, regType = "l1")
+#lasso_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True, regType = "l1")
 
 # training error
-lasso_valuesAndPreds = parsedData.map(lambda p: (p.label, lasso_model.predict(p.features)))
-MSE = lasso_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lasso_valuesAndPreds.count()
-print("LASSO Mean Squared Error = " + str(MSE))
-
-# LASSO
-lasso_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True, regType = "l1")
-
-# training error
-lasso_valuesAndPreds = parsedData.map(lambda p: (p.label, lasso_model.predict(p.features)))
-MSE = lasso_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lasso_valuesAndPreds.count()
-print("LASSO Mean Squared Error = " + str(MSE))
-
+#lasso_valuesAndPreds = parsedData.map(lambda p: (p.label, lasso_model.predict(p.features)))
+#MSE = lasso_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lasso_valuesAndPreds.count()
+#print("LASSO Mean Squared Error = " + str(MSE))
 
 #TODO: do same as 54-56 with test and validation
 
