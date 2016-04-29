@@ -49,29 +49,29 @@ parsedData = sc.parallelize(map(parsePoint, feats_dict))
 
 ## create validation set
 
-#lm_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True)
 
 # Training error
-#lm_valuesAndPreds = parsedData.map(lambda p: (p.label, lm_model.predict(p.features)))
-#MSE = lm_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lm_valuesAndPreds.count()
-#print("Linear Regression Mean Squared Error = " + str(MSE))
-
-df = sqlContext.createDataFrame(parsedData, ["prediction", "features"])
+df = sqlContext.createDataFrame(parsedData, ["label", "features"])
 lm_model = LinearRegression(featuresCol="features", predictionCol="prediction", maxIter=100, regParam=0.0, elasticNetParam=0.0, tol=1e-6)
-lm_model_fit = lm_model.fit(features)
+lm_model_fit = lm_model.fit(df)
+lm_transform = lm_model_fit.transform(df)
+results = lm_transform.select(lm_transform['prediction'], lm_transform['label'])
+MSE = results.map(lambda(p,l):(p-l)**2).reduce(lambda x,y:x+y)/results.count()
+print("Linear Regression Mean Squared Error = " + str(MSE))
+
 lm_model.save(sc, "LinerRegressionModel")
 
 # LASSO
-#lasso_model = LinearRegressionWithSGD.train(parsedData, iterations=5, intercept = True, regType = "l1")
-
-# training error
-#lasso_valuesAndPreds = parsedData.map(lambda p: (p.label, lasso_model.predict(p.features)))
-#MSE = lasso_valuesAndPreds.map(lambda (v, p): (v - p)**2).reduce(lambda x, y: x + y) / lasso_valuesAndPreds.count()
-#print("LASSO Mean Squared Error = " + str(MSE))
 
 #TODO: do same as 54-56 with test and validation
+lasso_model = LinearRegression(featuresCol="features", predictionCol="prediction", maxIter=100, regParam=1.0, elasticNetParam=0.0, tol=1e-6)
+lasso_model_fit = lasso_model.fit(df)
+lasso_transform = lasso_model_fit.transform(df) #change to a test model
+lasso_results = lasso_transform.select(lasso_transform['prediction'], lasso_transform['label'])
+lasso_MSE = lasso_results.map(lambda(p,l):(p-l)**2).reduce(lambda x,y:x+y)/results.count()
+print("LASSO Mean Squared Error = " + str(lasso_MSE))
 
-model.save(sc, "SVMModel")
+model.save(sc, "LASSOModel")
 
 ### Run Model on Validation Set
 ## TODO: output file of zipcodes and predicted success metrics
