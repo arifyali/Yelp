@@ -10,7 +10,7 @@ sqlContext = HiveContext(sc)
 # The races from the census data were normalized in order 
 qry = "SELECT *,white/population as white_percent,black/population as black_percent,asian/population as asian_percent,pacific_islander/population as pi_percent,other_race/population as other_race_percent,multiple_race/population as multiple_percent,hispanic/population as hispanic_percent FROM census_rest_success"
 df = sqlContext.sql(qry)
-
+(df.toPandas()).to_csv("yelp_dataset.csv")
 ## Lets train a Support Vector Classifier on this data
 #CITATION:
 #http://stackoverflow.com/questions/33900726/count-number-of-non-nan-entries-in-each-column-of-spark-dataframe-with-pyspark
