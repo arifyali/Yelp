@@ -11,7 +11,6 @@ sqlContext = HiveContext(sc)
 # The races from the census data were normalized in order
 qry = "SELECT *,white/population as white_percent,black/population as black_percent,asian/population as asian_percent,pacific_islander/population as pi_percent,other_race/population as other_race_percent,multiple_race/population as multiple_percent,hispanic/population as hispanic_percent FROM census_rest_success"
 df = sqlContext.sql(qry)
-(df.toPandas()).to_csv("yelp_dataset.csv")
 ## Lets train a Support Vector Classifier on this data
 #CITATION:
 #http://stackoverflow.com/questions/33900726/count-number-of-non-nan-entries-in-each-column-of-spark-dataframe-with-pyspark
@@ -70,11 +69,14 @@ MSE = results.map(lambda (p,l):(p-l)**2).reduce(lambda x,y:x+y)/results.count()
 print("Linear Regression training Mean Squared Error = " + str(MSE))
 
 lm_transform = lm_model_fit.transform(testDf)
-results = lm_transform.select(float(lm_transform['prediction']), lm_transform['label'])
+results = lm_transform.select(lm_transform['prediction'], lm_transform['label'])
 MSE = results.map(lambda (p,l):(p-l)**2).reduce(lambda x,y:x+y)/results.count()
 print("Linear Regression testing Mean Squared Error = " + str(MSE))
 
-metrics = RegressionMetrics(results)
+res = results.collect()
+predsAndLabels = sc.parallelize([i.asDict().values() for i in res])
+metrics = RegressionMetrics(predsAndLabels)
+
 
 print metrics.meanSquaredError
 print metrics.rootMeanSquaredError
