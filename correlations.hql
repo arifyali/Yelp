@@ -1,0 +1,86 @@
+SET mapred.input.di.recursive=true;
+SET hive.mapred.supports.subdirectories=true;
+SET hive.groupby.orderby.position.alias=true;;
+
+SELECT corr(pricerange, success_metric),
+       corr(GoodForKids, success_metric),
+       corr(goodforgroup, success_metric),
+       corr(goodfordessert, success_metric),
+       corr(goodforlatenight, success_metric),
+       corr(goodforlunch, success_metric),
+       corr(goodfordinner, success_metric),
+        corr(goodforbrunch, success_metric),
+        corr(goodforbreakfast, success_metric),
+        corr(romantic, success_metric),
+        corr(intimate, success_metric),
+        corr(classy, success_metric),
+        corr(hipster, success_metric),
+       corr(divey, success_metric),
+        corr(touristy, success_metric),
+       corr(trendy, success_metric),
+        corr(upscale, success_metric),
+        corr(casual, success_metric)
+FROM census_rest_success;
+
+
+SELECT corr(pricerange, success_class),
+       corr(GoodForKids, success_class),
+       corr(goodforgroup, success_class),
+       corr(goodfordessert, success_class),
+       corr(goodforlatenight, success_class),
+       corr(goodforlunch, success_class),
+       corr(goodfordinner, success_class),
+        corr(goodforbrunch, success_class),
+        corr(goodforbreakfast, success_class),
+        corr(romantic, success_class),
+        corr(intimate, success_class),
+        corr(classy, success_class),
+        corr(hipster, success_class),
+       corr(divey, success_class),
+        corr(touristy, success_class),
+       corr(trendy, success_class),
+        corr(upscale, success_class),
+        corr(casual, success_class)
+FROM census_rest_success;
+
+SELECT corr(2015_01, success_class),
+       corr(2016_01, success_class),
+       corr(2016_02, success_class),
+       corr(male_age_25_29, success_class),
+       corr(female_age_25_29, success_class),
+       corr(white, success_class),
+       corr(black, success_class),
+       corr(population, success_class),
+       corr(median_household_income, success_class),
+       corr(median_family_income, success_class),
+       corr(total_housing_units, success_class),
+       corr(occupied_housing_units, success_class),
+       corr(owner_occupied_housing_units, success_class),
+       corr(house_value_500g_750g, success_class),
+       corr(house_value_750g_1m, success_class),
+       corr(house_value_over_1m, success_class),
+       corr(vacant_housing_units, success_class),
+       corr(median_housing_value, success_class),
+       corr(median_rent, success_class)
+FROM census_rest_success;
+
+SELECT corr(2015_01, success_metric),
+       corr(2016_01, success_metric),
+       corr(2016_02, success_metric),
+       corr(male_age_25_29, success_metric),
+       corr(female_age_25_29, success_metric),
+       corr(white, success_metric),
+       corr(black, success_metric),
+       corr(population, success_metric),
+       corr(median_household_income, success_metric),
+       corr(median_family_income, success_metric),
+       corr(total_housing_units, success_metric),
+       corr(occupied_housing_units, success_metric),
+       corr(owner_occupied_housing_units, success_metric),
+       corr(house_value_500g_750g, success_metric),
+       corr(house_value_750g_1m, success_metric),
+       corr(house_value_over_1m, success_metric),
+       corr(vacant_housing_units, success_metric),
+       corr(median_housing_value, success_metric),
+       corr(median_rent, success_metric)
+FROM census_rest_success;

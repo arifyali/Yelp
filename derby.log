@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Sun Apr 24 17:57:58 UTC 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0154-496b-beea-000037db3c98 
-on database directory /mnt/tmp/spark-65ad19b2-a161-45dd-8d8e-042d935e627e/metastore with class loader sun.misc.Launcher$AppClassLoader@10f0f6ac 
+Sat Apr 30 00:57:47 UTC 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0154-64ab-e395-000038f749d0 
+on database directory /mnt/tmp/spark-a8eedcee-a0cd-468b-9f64-b0832bf480c3/metastore with class loader sun.misc.Launcher$AppClassLoader@4e4b9101 
 Loaded from file:/usr/lib/spark/lib/spark-assembly-1.6.1-hadoop2.7.2-amzn-1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_99-mockbuild_2016_03_28_23_53-b00
+java.runtime.version=1.7.0_101-mockbuild_2016_04_26_18_10-b00
 user.dir=/home/hadoop/Yelp
 os.name=Linux
 os.arch=amd64
