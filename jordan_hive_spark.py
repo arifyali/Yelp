@@ -34,12 +34,16 @@ df.agg(*exprs).show()
 
 df = df.dropna()
 
-features = df.select(df['pricerange'], df['2016_01'], df['2016_02'], df['male_age_25_29'],
-          df['female_age_25_29'], df['white_percent'], df['black_percent'], df['asian_percent'],
-          df['pi_percent'], df['other_race_percent'], df['multiple_percent'],
-          df['hispanic_percent'], df['median_household_income'], df['median_family_income'],
-          df['vacant_housing_units'], df['median_housing_value'], df['median_rent'],
-          df['success_class'], df['population'])
+features = df.select(df['goodforkids'], df['goodforgroup'], df['goodfordessert'],
+           df['goodforlatenight'], df['goodforlunch'], df['goodfordinner'],
+           df['goodforbrunch'], df['goodforbreakfast'], df['romantic'],
+           df['intimate'], df['classy'], df['hipster'], df['divey'], df['touristy'],
+           df['trendy'], df['upscale'], df['casual'], df['pricerange'], df['2016_01'],
+           df['2016_02'], df['male_age_25_29'], df['female_age_25_29'], df['white_percent'],
+           df['black_percent'], df['asian_percent'], df['pi_percent'], df['other_race_percent'],
+           df['multiple_percent'], df['hispanic_percent'], df['median_household_income'],
+           df['median_family_income'], df['vacant_housing_units'], df['median_housing_value'],
+           df['median_rent'], df['success_class'], df['population'])
 
 training, test = features.randomSplit([0.7, 0.3], seed=11L)
 
