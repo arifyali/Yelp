@@ -6,3 +6,5 @@ DROP TABLE IF EXISTS census_data;
 DROP TABLE IF EXISTS rest_rev_merge;
 DROP TABLE IF EXISTS census_rest_merge;
 DROP TABLE IF EXISTS census_rest_success;
+DROP TABLE IF EXISTS zipcode_merge;
+DROP TABLE IF EXISTS zipcode_success;
