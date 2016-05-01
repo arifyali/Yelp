@@ -12,7 +12,7 @@ source1 = ColumnDataSource(data=df)
 hover1 = HoverTool(tooltips=[("zipcode","@zipcode"),
                              ("success_metric","@success_metric")])
 
-p = Figure(title='Mean Success by zip Success Metric vs Housing Costs',
+p = Figure(title='Mean Success by zip vs Housing Costs',
            x_axis_label='$/sq. ft.',
            y_axis_label='success_metric',
            tools=['crosshair,resize,reset,save', hover1])
